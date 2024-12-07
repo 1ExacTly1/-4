@@ -8,6 +8,27 @@ namespace Задание_2
 {
     internal class Program
     {
+        static368 string FindLongestVowelSubstring(string str)
+        {
+            string vowels = "aeiouy";
+            string longest = string.Empty;
+
+            for (int i = 0; i < str.Length; i++)
+            {
+                for (int j = i + 1; j < str.Length; j++)
+                {
+                    if (vowels.Contains(str[i]) && vowels.Contains(str[j]))
+                    {
+                        string substring = str.Substring(i, j - i + 1);
+                        if (substring.Length > longest.Length)
+                        {
+                            longest = substring;
+                        }
+                    }
+                }
+            }
+            return longest;
+        }
         static string ReverseString(string str)
         {
             char[] chars = str.ToCharArray();
@@ -43,7 +64,7 @@ namespace Задание_2
             List<char> invalid = new List<char>();
             foreach (char c in a)
             {
-                if (c != 'a' && c != 'e' && c != 'i' && c != 'o' && c != 'u' && c != 'y')
+                if (c < 'a' || c > 'z')
                 {
                     invalid.Add(c);
                 }
@@ -66,9 +87,18 @@ namespace Задание_2
                 result = ReverseString(a) + a;
             }
 
-            Console.WriteLine("Обработанная строка: " + result);
-            PrintRepeatFrequency(result);
+            string longestVowelSubstring = FindLongestVowelSubstring(result);
 
+            if (longestVowelSubstring == "")
+            {
+                Console.WriteLine("Подстрока не найдена");
+            }
+            else
+            {
+                Console.WriteLine("Обработанная строка: " + result);
+                PrintRepeatFrequency(result);
+                Console.WriteLine("Наибольшая подстрока, начинающаяся и заканчивающаяся на гласную: " + longestVowelSubstring);
+            }
 
             Console.ReadKey();
 
